@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   icons: {
-    icon: "/icon.svg",
+    icon: "/icon.jpeg",
   },
   category: "Business",
 };

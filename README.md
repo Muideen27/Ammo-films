@@ -24,7 +24,7 @@ src/
 docs/
 └── DATABASE.md          # Optional persistence schema
 public/
-└── icon.svg
+└── icon.jpeg
 ```
 
 ## Getting Started
