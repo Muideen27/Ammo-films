@@ -6,7 +6,7 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     name: "Ammofilms",
     url: SITE_URL,
-    logo: `${SITE_URL}/icon.svg`,
+    logo: `${SITE_URL}/icon.jpeg`,
     description:
       "Nigerian talent recruitment agency connecting aspiring creators and models with legitimate international streaming opportunities.",
     email: CONTACT.email,
