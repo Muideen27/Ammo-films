@@ -31,18 +31,11 @@ export const IMAGES = {
   about: "/images/about.jpg",
   benefits: "/images/benefits.jpg",
   training: "/images/training.jpg",
+  requirements: "/images/requirements.jpg",
   faq: "/images/faq.jpg",
   application: "/images/application.jpg",
 } as const;
 
-// export const IMAGES = {
-//   hero: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1920&q=85&auto=format&fit=crop",
-//   about: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=85&auto=format&fit=crop",
-//   benefits: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=85&auto=format&fit=crop",
-//   training: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=85&auto=format&fit=crop",
-//   faq: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85&auto=format&fit=crop",
-//   application: "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=1200&q=85&auto=format&fit=crop",
-// } as const;
 
 export const KEYWORDS = [
   "Nigerian Models",

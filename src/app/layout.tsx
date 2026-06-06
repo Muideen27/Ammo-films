@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { KEYWORDS, SITE_URL } from "@/lib/constants";
+import { WhatsAppChat } from "@/components/WhatsAppChat";
 import { FAQ_ITEMS } from "@/lib/faq";
 import {
   getFAQSchema,
@@ -109,6 +110,7 @@ export default function RootLayout({
         ))}
       </head>
       <body className="font-sans min-h-screen">
+        <WhatsAppChat />
         <a
           href="#home"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-primary"
