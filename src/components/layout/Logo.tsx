@@ -10,14 +10,14 @@ export function Logo({ onClick }: { onClick?: () => void }) {
       className="group flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-lg"
       aria-label="Ammofilms — Home"
     >
-      <Image
+      {/* <Image
           src={IMAGES.hero}
           alt="Professional female creator in a modern streaming studio with professional lighting"
           fill
           priority
           className="object-cover object-center"
           sizes="75vw"
-      />
+      /> */}
 
       <span className="font-display text-xl font-bold tracking-tight text-white group-hover:text-accent transition-colors">
         Ammofilms

@@ -120,9 +120,9 @@ export function Requirements() {
           </ul>
 
           <AnimateIn direction="right">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-luxury">
+            <div className="relative aspect-[5/5] overflow-hidden rounded-3xl shadow-luxury">
               <Image
-                src={IMAGES.training}
+                src={IMAGES.requirements}
                 alt="Creator receiving mentorship and training in a professional environment"
                 fill
                 className="object-cover"
