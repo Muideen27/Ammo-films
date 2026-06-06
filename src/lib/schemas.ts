@@ -26,9 +26,7 @@ export const applicationSchema = z.object({
     .string()
     .min(30, "Please share your motivation (at least 30 characters)")
     .max(2000),
-  ageConfirmed: z.boolean().refine((val) => val === true, {
-    message: "You must confirm you are 18 or older",
-  }),
+  status: z.enum(["new", "in_review", "accepted", "rejected"]).default("new"),
 });
 
 export type ApplicationFormData = z.infer<typeof applicationSchema>;
@@ -36,7 +34,7 @@ export type ApplicationFormData = z.infer<typeof applicationSchema>;
 export const APPLICATION_STORAGE_KEY = "ammofilms-application-draft";
 
 export const FORM_STEPS = [
-  { id: 1, title: "Personal", fields: ["fullName", "age", "ageConfirmed"] as const },
+  { id: 1, title: "Personal", fields: ["fullName", "age"] as const },
   { id: 2, title: "Location", fields: ["city", "state"] as const },
   { id: 3, title: "Contact", fields: ["phone", "email"] as const },
   { id: 4, title: "Your Story", fields: ["experience", "motivation"] as const },

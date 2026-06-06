@@ -13,11 +13,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { CheckCircle2, ChevronLeft, ChevronRight, Save } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight, Save, XCircle } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const defaultValues: ApplicationFormData = {
+const defaultValues: Omit<ApplicationFormData, "status"> = {
   fullName: "",
   age: 18,
   city: "",
@@ -26,12 +26,12 @@ const defaultValues: ApplicationFormData = {
   email: "",
   experience: "",
   motivation: "",
-  ageConfirmed: false,
 };
 
 export function ApplicationForm() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [savedHint, setSavedHint] = useState(false);
 
   const {
@@ -113,18 +113,24 @@ export function ApplicationForm() {
   const goBack = () => setStep((s) => Math.max(s - 1, 1));
 
   const onSubmit = async (data: ApplicationFormData) => {
+    setSubmissionError(null); // Clear previous errors
     try {
       const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Submission failed");
+      const result = await res.json();
+
+      if (!res.ok) {
+        setSubmissionError(result.error || "Submission failed");
+        return;
+      }
       localStorage.removeItem(APPLICATION_STORAGE_KEY);
       setSubmitted(true);
-    } catch {
-      localStorage.removeItem(APPLICATION_STORAGE_KEY);
-      setSubmitted(true);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmissionError("An unexpected error occurred.");
     }
   };
 
@@ -258,30 +264,6 @@ export function ApplicationForm() {
                           error={errors.age?.message}
                           hint="Must be 18 years or older"
                         />
-                        <label className="flex items-start gap-3 rounded-xl border-2 border-accent/30 bg-accent/5 p-4 cursor-pointer touch-manipulation">
-                          <input
-                            type="checkbox"
-                            className="mt-1 h-5 w-5 rounded border-slate-300 text-accent focus:ring-accent"
-                            {...register("ageConfirmed")}
-                            aria-describedby="age-confirm-hint"
-                          />
-                          <span>
-                            <span className="font-semibold text-primary">
-                              I confirm I am 18 years of age or older
-                            </span>
-                            <span
-                              id="age-confirm-hint"
-                              className="block mt-1 text-sm text-foreground/70"
-                            >
-                              Required. Age verification will be conducted during onboarding.
-                            </span>
-                          </span>
-                        </label>
-                        {errors.ageConfirmed && (
-                          <p role="alert" className="text-sm text-red-600">
-                            {errors.ageConfirmed.message}
-                          </p>
-                        )}
                       </>
                     )}
 
@@ -345,7 +327,12 @@ export function ApplicationForm() {
                     )}
                   </motion.div>
                 </AnimatePresence>
-
+                {submissionError && (
+                  <div className="mt-4 flex items-center gap-2 rounded-md bg-red-50 p-3 text-sm text-red-700" role="alert">
+                    <XCircle className="h-5 w-5" aria-hidden />
+                    {submissionError}
+                  </div>
+                )}
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <button
                     type="button"
@@ -363,6 +350,7 @@ export function ApplicationForm() {
                         variant="ghost"
                         onClick={goBack}
                         className="w-full sm:w-auto"
+                        disabled={isSubmitting}
                       >
                         <ChevronLeft className="h-5 w-5 mr-1" aria-hidden />
                         Back
@@ -373,6 +361,7 @@ export function ApplicationForm() {
                         type="button"
                         onClick={goNext}
                         className="w-full sm:w-auto"
+                        disabled={isSubmitting}
                       >
                         Continue
                         <ChevronRight className="h-5 w-5 ml-1" aria-hidden />
