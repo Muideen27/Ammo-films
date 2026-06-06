@@ -19,7 +19,7 @@ export function FAQ() {
 
         <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-start">
           <AnimateIn>
-            <div className="relative aspect-video overflow-hidden rounded-3xl shadow-luxury lg:sticky lg:top-28">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-luxury lg:sticky lg:top-28">
               <Image
                 src={IMAGES.faq}
                 alt="Supportive professional agency office environment"

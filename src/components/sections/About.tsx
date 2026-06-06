@@ -45,7 +45,7 @@ export function About() {
         <SectionHeading
           eyebrow="About Us"
           title="Building Global Careers From Nigeria"
-          description="Ammofilms bridges ambitious Nigerian creators with legitimate international streaming opportunities—backed by professional agency support."
+          description="Ammofilms bridges ambitious Nigerian creators with legitimate international streaming opportunities backed by professional agency support."
         />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">

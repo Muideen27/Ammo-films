@@ -8,6 +8,7 @@ import {
   Globe,
   GraduationCap,
   Headphones,
+  House,
   LineChart,
   Lock,
   Sparkles,
@@ -27,16 +28,16 @@ const BENEFITS = [
       "Structured onboarding covering presentation, technical setup, and platform-specific best practices.",
   },
   {
+    icon: House,
+    title: "Accomodation",
+    description:
+      "You can work from our studio, And We provide accommodation And all the necessary equipment",
+  },
+  {
     icon: Headphones,
     title: "Dedicated Support",
     description:
       "Ongoing mentorship and responsive agency support throughout your career journey.",
-  },
-  {
-    icon: LineChart,
-    title: "Career Growth",
-    description:
-      "Performance guidance and strategies to build sustainable income at international standards.",
   },
   {
     icon: Lock,
