@@ -1,6 +1,6 @@
 import { applicationSchema } from "@/lib/schemas";
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/server";
 import { Database } from "@/types/supabase";
 
 export async function POST(request: Request) {
@@ -18,12 +18,10 @@ export async function POST(request: Request) {
 
     const application = parsed.data;
 
-    console.log("NEXT_PUBLIC_SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log("NEXT_PUBLIC_SUPABASE_ANON_KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-    console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY);
-    const supabase = createClient();
+    const { data, error } = await supabaseAdmin
+      .from("applications")
+      .insert({
 
-    const { data, error } = await supabase.from("applications").insert({
       full_name: application.fullName,
       age: application.age,
       city: application.city,
@@ -33,6 +31,7 @@ export async function POST(request: Request) {
       experience: application.experience,
       motivation: application.motivation,
       status: "new", // Default status
+      
     });
 
     if (error) {
