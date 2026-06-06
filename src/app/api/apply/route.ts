@@ -18,6 +18,9 @@ export async function POST(request: Request) {
 
     const application = parsed.data;
 
+    console.log("NEXT_PUBLIC_SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log("NEXT_PUBLIC_SUPABASE_ANON_KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+    console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY);
     const supabase = createClient();
 
     const { data, error } = await supabase.from("applications").insert({
