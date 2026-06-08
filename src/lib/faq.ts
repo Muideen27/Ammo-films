@@ -60,6 +60,12 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Ammofilms does not charge illegal upfront fees. Any legitimate costs related to verification, equipment, or platform requirements will be explained transparently during onboarding. Be cautious of anyone claiming to represent us who requests suspicious payments.",
   },
   {
+    id: "accomodation",
+    question: "Can I work from ammofilms studio?",
+    answer:
+      "Yes for beginners, you can work from our studio, And We provide accommodation And all the necessary equipment",
+  },
+  {
     id: "training",
     question: "What training and support do you provide?",
     answer:
@@ -75,7 +81,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: "equipment",
     question: "Do I need my own equipment?",
     answer:
-      "A reliable smartphone or computer, stable internet, and a professional streaming environment are required. We provide recommendations for lighting, audio, and workspace setup so your presentation meets international quality standards.",
+      "A reliable smartphone or computer, stable internet, and a professional streaming environment are required. We provide accomodations and recommendations for lighting, audio, and workspace setup so your presentation meets international quality standards.",
   },
   {
     id: "internet",

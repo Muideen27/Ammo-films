@@ -30,7 +30,7 @@ const sizes = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", children, ...props }, ref) => (
+  ({ className, variant = "primary", size = "md", children, asChild, ...props }, ref) => (
     <motion.button
       ref={ref}
       whileHover={{ scale: 1.02 }}
