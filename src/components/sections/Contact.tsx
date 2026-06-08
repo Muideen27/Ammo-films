@@ -7,6 +7,9 @@ import { scrollToSection } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Mail, MapPin, MessageCircle } from "lucide-react";
 
+const whatsappUrl =
+  "https://wa.me/2349168736391?text=Hello%20Ammofilms,%20I%20would%20like%20to%20learn%20more%20about%20your%20opportunities.";
+
 export function Contact() {
   return (
     <section id="contact" className="bg-slate-50 py-20 sm:py-28" aria-labelledby="contact-heading">
@@ -32,9 +35,24 @@ export function Contact() {
               >
                 {CONTACT.email}
               </a>
+
               <p className="mt-3 text-sm text-foreground/60">
-                We typically respond within 2–5 business days.
+                Prefer a faster response? Chat with our team directly on WhatsApp.
               </p>
+
+                    <Button
+        asChild
+        className="mt-6 w-full bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500"
+      >
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <MessageCircle className="mr-2 h-4 w-4" />
+          Chat on WhatsApp
+        </a>
+      </Button>
             </article>
           </AnimateIn>
 

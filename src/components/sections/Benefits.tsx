@@ -2,6 +2,7 @@
 
 import { IMAGES } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Accordion } from "@/components/ui/Accordion";
 import { StaggerContainer, StaggerItem } from "@/components/ui/AnimateIn";
 import Image from "next/image";
 import {
@@ -86,26 +87,24 @@ export function Benefits() {
             </div>
           </div>
 
-          <StaggerContainer className="lg:col-span-3 grid gap-4 sm:grid-cols-2">
-            {BENEFITS.map((benefit) => (
-              <StaggerItem key={benefit.title}>
-                <article className="h-full rounded-2xl border border-slate-100 bg-white p-6 shadow-card transition-all hover:-translate-y-1 hover:shadow-luxury">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-accent">
-                    <benefit.icon className="h-6 w-6" aria-hidden />
+          <div className="lg:col-span-3 grid gap-4">
+            <Accordion
+              items={BENEFITS.map((benefit) => ({
+                id: benefit.title,
+                question: (
+                  <div className="flex items-center gap-4 py-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-accent">
+                      <benefit.icon className="h-5 w-5" aria-hidden />
+                    </div>
+                    <span className="font-display text-lg font-bold text-primary">
+                      {benefit.title}
+                    </span>
                   </div>
-                  <h3
-                    id={benefit.title === BENEFITS[0].title ? "benefits-title" : undefined}
-                    className="mt-4 font-display text-lg font-bold text-primary"
-                  >
-                    {benefit.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-foreground/70 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </article>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+                ),
+                answer: benefit.description,
+              }))}
+            />
+          </div>
         </div>
       </div>
     </section>

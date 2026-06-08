@@ -34,15 +34,6 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-sm text-accent backdrop-blur-sm"
-          >
-            <Shield className="h-4 w-4" aria-hidden />
-            <span>Legitimate · Verified · International</span>
-          </motion.div>
 
           <h1
             id="hero-heading"
@@ -52,8 +43,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-            Professional support, onboarding, training, and access to trusted
-            international platforms.
+            Professional support, onboarding, training, and access
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -65,14 +55,7 @@ export function Hero() {
               Apply Now
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => scrollToSection("about")}
-              className="w-full border-white/40 text-white hover:bg-white/10 sm:w-auto"
-            >
-              Learn More
-            </Button>
+            
           </div>
 
           <ul className="mt-10 flex flex-wrap gap-6 text-sm text-slate-400" aria-label="Trust highlights">

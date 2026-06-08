@@ -4,11 +4,12 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import React from "react"; // Import React for React.ReactNode
 
 export interface AccordionItemData {
   id: string;
-  question: string;
-  answer: string;
+  question: React.ReactNode;
+  answer: React.ReactNode;
 }
 
 interface AccordionProps {
