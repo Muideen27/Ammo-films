@@ -110,11 +110,12 @@ export default async function GalleryPage() {
       )}
 
       {/* Infinite Masonry Gallery */}
-      <section id="gallery-grid" className="py-16 md:py-24 bg-gray-800">
+      <section id="gallery-grid" className="py-16 md:py-24 bg-gray-900">
         <div className="container mx-auto px-4">
           <SectionHeading
             title="Our Creators"
             description="A showcase of talent and passion."
+            light
           />
           <AnimateIn className="mt-12">
             <GalleryGrid initialItems={initialGalleryItems} totalItemsCount={totalItemsCount} /> {/* Pass totalItemsCount */}
