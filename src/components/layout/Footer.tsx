@@ -1,7 +1,7 @@
 "use client";
 
 import { CONTACT, NAV_ITEMS } from "@/lib/constants";
-import { scrollToSection } from "@/lib/utils";
+import { getNavHref } from "@/lib/utils";
 import Link from "next/link";
 
 export function Footer() {
@@ -30,13 +30,12 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               {NAV_ITEMS.map((item) => (
                 <li key={item.id}>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection(item.id)}
+                  <Link
+                    href={getNavHref(item.id)}
                     className="text-sm hover:text-white transition-colors"
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

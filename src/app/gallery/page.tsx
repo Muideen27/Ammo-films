@@ -2,11 +2,17 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getGalleryItems, getFeaturedGalleryItem, getTotalGalleryItemsCount } from "@/lib/gallery";
+import { WHATSAPP_URL } from "@/lib/constants";
+import { getNavHref } from "@/lib/utils";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { PageShell } from "@/components/PageShell";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Ammofilms Gallery | Creator Showcase",
@@ -33,9 +39,11 @@ export default async function GalleryPage() {
   const totalItemsCount = await getTotalGalleryItemsCount(); // Fetch total count
 
   return (
+    <>
+    <Header />
     <PageShell>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center text-white">
+      <section className="relative flex min-h-screen items-center justify-center pt-20 text-white">
         <div className="absolute inset-0">
           <Image
             src={featuredItem?.image_url || "/images/hero.jpg"}
@@ -118,15 +126,17 @@ export default async function GalleryPage() {
             </h2>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button asChild size="lg">
-                <Link href="/apply">Apply Now</Link>
+                <Link href={getNavHref("apply")}>Apply Now</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="https://wa.me/YOUR_WHATSAPP_NUMBER">WhatsApp</Link>
+                <Link href={WHATSAPP_URL}>WhatsApp</Link>
               </Button>
             </div>
           </AnimateIn>
         </div>
       </section>
     </PageShell>
+    <Footer />
+    </>
   );
 }

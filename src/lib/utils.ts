@@ -13,3 +13,9 @@ export function scrollToSection(id: string) {
     window.scrollTo({ top, behavior: "smooth" });
   }
 }
+
+export function getNavHref(id: string): string {
+  if (id === "gallery") return "/gallery";
+  if (id === "apply") return "/apply";
+  return `/#${id}`;
+}

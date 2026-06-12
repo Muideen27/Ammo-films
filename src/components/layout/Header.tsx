@@ -1,7 +1,7 @@
 "use client";
 
 import { NAV_ITEMS } from "@/lib/constants";
-import { cn, scrollToSection } from "@/lib/utils";
+import { cn, getNavHref, scrollToSection } from "@/lib/utils";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -46,11 +46,11 @@ export function Header() {
             className="hidden lg:flex items-center gap-1"
             aria-label="Main navigation"
           >
-            {NAV_ITEMS.map((item) => (
-              item.id === "gallery" ? (
+            {NAV_ITEMS.map((item) =>
+              item.id === "gallery" || item.id === "apply" ? (
                 <Link
                   key={item.id}
-                  href="/gallery"
+                  href={getNavHref(item.id)}
                   className={cn(
                     "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
                     activeId === item.id
@@ -80,9 +80,9 @@ export function Header() {
                   )}
                 </button>
               )
-            ))}
+            )}
             <Link
-              href="/apply"
+              href={getNavHref("apply")}
               className="ml-3 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-primary hover:bg-[#e8c547] transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
             >
               Apply Now
