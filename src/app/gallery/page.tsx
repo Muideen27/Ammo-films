@@ -1,14 +1,18 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getGalleryItems, getFeaturedGalleryItem, getTotalGalleryItemsCount } from "@/lib/gallery";
+import {
+  getGalleryItems,
+  getFeaturedGalleryItem,
+  getGalleryHeroImageUrl,
+  getTotalGalleryItemsCount,
+} from "@/lib/gallery";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { getNavHref } from "@/lib/utils";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { PageShell } from "@/components/PageShell";
-import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";
 
@@ -38,16 +42,17 @@ export default async function GalleryPage() {
   const featuredItem = await getFeaturedGalleryItem();
   const totalItemsCount = await getTotalGalleryItemsCount(); // Fetch total count
 
+  const heroImageUrl = getGalleryHeroImageUrl();
+
   return (
     <>
-    <Header />
     <PageShell>
       {/* Hero Section */}
-      <section className="relative flex min-h-screen items-center justify-center pt-20 text-white">
+      <section className="relative flex min-h-screen items-center justify-center text-white">
         <div className="absolute inset-0">
           <Image
-            src={featuredItem?.image_url || "/images/hero.jpg"}
-            alt={featuredItem?.title || "Ammofilms Gallery Hero"}
+            src={heroImageUrl}
+            alt="Ammofilms Gallery"
             fill
             priority
             quality={100}
