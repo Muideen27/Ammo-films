@@ -1,11 +1,12 @@
 "use client";
 
 import { IMAGES } from "@/lib/constants";
-import { scrollToSection } from "@/lib/utils";
+import { getNavHref, scrollToSection } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, Shield } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -55,7 +56,11 @@ export function Hero() {
               Apply Now
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
             </Button>
-            
+            <Button asChild size="lg" className="w-full sm:w-auto border-2 border-yellow-500 bg-white text-black hover:text-yellow-500">
+              <Link href={getNavHref("gallery")}>
+                Explore Gallery
+              </Link>
+            </Button>
           </div>
 
           <ul className="mt-10 flex flex-wrap gap-6 text-sm text-slate-400" aria-label="Trust highlights">
