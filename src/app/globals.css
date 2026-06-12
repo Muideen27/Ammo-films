@@ -36,6 +36,37 @@
   }
 }
 
+@layer components {
+  .gallery-masonry {
+    display: flex;
+    margin-left: -0.625rem;
+    width: auto;
+  }
+
+  .gallery-masonry-column {
+    padding-left: 0.625rem;
+    background-clip: padding-box;
+  }
+
+  .gallery-masonry-column > * {
+    margin-bottom: 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    .gallery-masonry {
+      margin-left: -1rem;
+    }
+
+    .gallery-masonry-column {
+      padding-left: 1rem;
+    }
+
+    .gallery-masonry-column > * {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 @layer utilities {
   .font-display {
     letter-spacing: -0.02em;

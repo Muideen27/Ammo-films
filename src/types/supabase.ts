@@ -51,6 +51,39 @@ export type Database = {
         };
         Relationships: [];
       };
+      gallery_items: {
+        Row: {
+          id: string;
+          title: string;
+          description: string | null;
+          image_url: string;
+          category: string | null;
+          featured: boolean;
+          display_order: number | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          description?: string | null;
+          image_url: string;
+          category?: string | null;
+          featured?: boolean;
+          display_order?: number | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          description?: string | null;
+          image_url?: string;
+          category?: string | null;
+          featured?: boolean;
+          display_order?: number | null;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {};
     Functions: {};

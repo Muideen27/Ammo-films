@@ -7,6 +7,7 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
+import Link from "next/link";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,31 +47,46 @@ export function Header() {
             aria-label="Main navigation"
           >
             {NAV_ITEMS.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => scrollToSection(item.id)}
-                className={cn(
-                  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                  activeId === item.id
-                    ? "text-accent"
-                    : "text-slate-300 hover:text-white"
-                )}
-                aria-current={activeId === item.id ? "true" : undefined}
-              >
-                {item.label}
-                {activeId === item.id && (
-                  <span className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-accent" />
-                )}
-              </button>
+              item.id === "gallery" ? (
+                <Link
+                  key={item.id}
+                  href="/gallery"
+                  className={cn(
+                    "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                    activeId === item.id
+                      ? "text-accent"
+                      : "text-slate-300 hover:text-white"
+                  )}
+                  aria-current={activeId === item.id ? "true" : undefined}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollToSection(item.id)}
+                  className={cn(
+                    "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                    activeId === item.id
+                      ? "text-accent"
+                      : "text-slate-300 hover:text-white"
+                  )}
+                  aria-current={activeId === item.id ? "true" : undefined}
+                >
+                  {item.label}
+                  {activeId === item.id && (
+                    <span className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-accent" />
+                  )}
+                </button>
+              )
             ))}
-            <button
-              type="button"
-              onClick={() => scrollToSection("apply")}
+            <Link
+              href="/apply"
               className="ml-3 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-primary hover:bg-[#e8c547] transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
             >
               Apply Now
-            </button>
+            </Link>
           </nav>
 
           <button
