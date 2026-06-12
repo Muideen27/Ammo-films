@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import type { GalleryItem } from "@/lib/gallery";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -23,7 +23,6 @@ export function Lightbox({
   onPrev,
 }: LightboxProps) {
   const [isClosing, setIsClosing] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
 
   const currentImage =
     currentIndex >= 0 && currentIndex < images.length
@@ -32,7 +31,7 @@ export function Lightbox({
 
   const handleClose = useCallback(() => {
     setIsClosing(true);
-    setTimeout(onClose, 300);
+    setTimeout(onClose, 280);
   }, [onClose]);
 
   const handleKeyDown = useCallback(
@@ -55,7 +54,7 @@ export function Lightbox({
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [handleKeyDown, currentImage]);
 
@@ -63,7 +62,8 @@ export function Lightbox({
     onSwipedLeft: onNext,
     onSwipedRight: onPrev,
     preventScrollOnSwipe: true,
-    trackMouse: true,
+    trackTouch: true,
+    trackMouse: false,
   });
 
   if (!currentImage) return null;
@@ -72,72 +72,91 @@ export function Lightbox({
     <AnimatePresence>
       {!isClosing && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${currentImage.title} — image ${currentIndex + 1} of ${images.length}`}
+          className="fixed inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          {...handlers}
+          transition={{ duration: 0.28 }}
         >
           <button
-            className="absolute top-4 right-4 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent"
+            type="button"
+            className="absolute inset-0 bg-black/95"
             onClick={handleClose}
-            aria-label="Close Lightbox"
-          >
-            <X size={28} />
-          </button>
+            aria-label="Close gallery"
+          />
 
-          <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent hidden sm:block"
-            onClick={onPrev}
-            aria-label="Previous Image"
+          <div
+            className="relative z-10 flex h-full w-full max-w-7xl flex-col items-center justify-center px-4 py-16 sm:px-12"
+            {...handlers}
           >
-            <ChevronLeft size={28} />
-          </button>
+            <button
+              type="button"
+              className="absolute right-3 top-3 z-20 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-accent sm:right-6 sm:top-6 sm:p-2.5"
+              onClick={handleClose}
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
 
-          <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent hidden sm:block"
-            onClick={onNext}
-            aria-label="Next Image"
-          >
-            <ChevronRight size={28} />
-          </button>
-
-          <motion.div
-            key={currentImage.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="relative max-w-full max-h-full w-full h-full flex items-center justify-center"
-          >
-            <Image
-              ref={imageRef}
-              src={currentImage.image_url}
-              alt={currentImage.title}
-              fill
-              className="object-contain"
-              quality={90}
-              priority
-              onLoadingComplete={(img) => {
-                if (
-                  imageRef.current &&
-                  img.naturalWidth < imageRef.current.offsetWidth &&
-                  img.naturalHeight < imageRef.current.offsetHeight
-                ) {
-                  img.style.objectFit = "scale-down";
-                }
+            <button
+              type="button"
+              className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-accent sm:left-4 sm:p-3"
+              onClick={(e) => {
+                e.stopPropagation();
+                onPrev();
               }}
-            />
-          </motion.div>
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={28} />
+            </button>
 
-          <div className="absolute bottom-4 p-4 bg-black bg-opacity-50 rounded-lg text-white max-w-md text-center">
-            <h3 className="text-lg font-semibold">{currentImage.title}</h3>
-            {currentImage.description && (
-              <p className="text-sm text-gray-300 mt-1">
-                {currentImage.description}
+            <button
+              type="button"
+              className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-accent sm:right-4 sm:p-3"
+              onClick={(e) => {
+                e.stopPropagation();
+                onNext();
+              }}
+              aria-label="Next image"
+            >
+              <ChevronRight size={28} />
+            </button>
+
+            <motion.div
+              key={currentImage.id}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.22 }}
+              className="relative h-[60vh] w-full max-h-[80vh] sm:h-[70vh]"
+            >
+              <Image
+                src={currentImage.image_url}
+                alt={currentImage.title}
+                fill
+                className="object-contain"
+                quality={90}
+                priority
+                sizes="100vw"
+              />
+            </motion.div>
+
+            <div className="mt-4 max-w-lg text-center">
+              <p className="text-xs font-medium uppercase tracking-wider text-white/50">
+                {currentIndex + 1} / {images.length}
               </p>
-            )}
+              <h3 className="mt-1 text-lg font-semibold text-white sm:text-xl">
+                {currentImage.title}
+              </h3>
+              {currentImage.description && (
+                <p className="mt-1 text-sm text-white/70">
+                  {currentImage.description}
+                </p>
+              )}
+            </div>
           </div>
         </motion.div>
       )}
