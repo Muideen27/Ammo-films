@@ -3,6 +3,12 @@ import { Tables } from "@/types/supabase";
 
 export type GalleryItem = Tables<'gallery_items'>;
 
+const GALLERY_HERO_PATH = "/storage/v1/object/public/gallery/gallery-01.jpg";
+
+export function getGalleryHeroImageUrl(): string {
+  return normalizeImageUrl(GALLERY_HERO_PATH);
+}
+
 function normalizeImageUrl(url: string): string {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
