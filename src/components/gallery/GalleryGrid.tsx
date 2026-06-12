@@ -2,28 +2,37 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { GalleryItem as GalleryItemType } from "@/types/supabase";
-import { getGalleryItems } from "@/lib/gallery";
+import type { GalleryItem } from "@/lib/gallery";
 import { useInView } from "react-intersection-observer";
 import Masonry from "react-masonry-css";
 import { Lightbox } from "./Lightbox";
+import { fetchMoreGalleryItems } from "@/app/gallery/actions";
 
 interface GalleryGridProps {
-  initialItems: GalleryItemType[];
+  initialItems: GalleryItem[];
   totalItemsCount: number;
 }
 
 const breakpointColumnsObj = {
   default: 4,
-  1100: 3,
-  700: 2,
-  500: 2,
+  1024: 3,
+  768: 2,
 };
 
+const ITEMS_PER_PAGE = 20;
+
+function getMasonryHeight(id: string): number {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) | 0;
+  }
+  return 400 + (Math.abs(hash) % 301);
+}
+
 export function GalleryGrid({ initialItems, totalItemsCount }: GalleryGridProps) {
-  const [items, setItems] = useState<GalleryItemType[]>(initialItems);
+  const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(items.length < totalItemsCount); // Initialize hasMore based on initial items and total count
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -37,15 +46,19 @@ export function GalleryGrid({ initialItems, totalItemsCount }: GalleryGridProps)
     if (isLoadingMore || !hasMore) return;
 
     setIsLoadingMore(true);
-    const newItems = await getGalleryItems(page);
+    const newItems = await fetchMoreGalleryItems(page * ITEMS_PER_PAGE, ITEMS_PER_PAGE); // Call with offset and limit
+
     if (newItems.length > 0) {
       setItems((prevItems) => [...prevItems, ...newItems]);
       setPage((prevPage) => prevPage + 1);
+      if (items.length + newItems.length >= totalItemsCount) { // Check if all items are loaded
+        setHasMore(false);
+      }
     } else {
       setHasMore(false);
     }
     setIsLoadingMore(false);
-  }, [page, isLoadingMore, hasMore]);
+  }, [page, isLoadingMore, hasMore, items.length, totalItemsCount]); // Added items.length and totalItemsCount to dependencies
 
   useEffect(() => {
     if (inView && hasMore && !isLoadingMore) {
@@ -89,7 +102,7 @@ export function GalleryGrid({ initialItems, totalItemsCount }: GalleryGridProps)
               src={item.image_url}
               alt={item.title}
               width={500} // Base width for masonry layout
-              height={Math.floor(Math.random() * (700 - 400 + 1)) + 400} // Random height for masonry effect
+              height={getMasonryHeight(item.id)}
               className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               quality={80}
               placeholder="blur"

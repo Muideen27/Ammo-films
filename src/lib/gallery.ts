@@ -1,54 +1,51 @@
-import { createClient } from "./supabase/server";
-import { GalleryItem } from "@/types/supabase";
+import { createServerClient } from "@/lib/supabase/server";
+import { Tables } from "@/types/supabase";
 
-const PAGE_SIZE = 20; // Number of items to load per page for infinite scroll
+export type GalleryItem = Tables<'gallery_items'>;
 
-export async function getGalleryItems(page = 0): Promise<GalleryItem[]> {
-  const supabase = createClient();
-  const start = page * PAGE_SIZE;
-  const end = start + PAGE_SIZE - 1;
-
+export async function getGalleryItems(
+  offset: number = 0,
+  limit: number = 20
+): Promise<GalleryItem[]> {
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from("gallery_items")
-    .select("*", { count: "exact" })
+    .select("*")
     .order("display_order", { ascending: true })
-    .range(start, end);
+    .range(offset, offset + limit - 1); // Supabase range is inclusive
 
   if (error) {
-    console.error("Error fetching gallery items:", error);
+    console.error("Error fetching gallery items:", error.message);
     return [];
   }
 
-  return data as GalleryItem[];
+  return data;
 }
 
 export async function getFeaturedGalleryItem(): Promise<GalleryItem | null> {
-  const supabase = createClient();
-
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from("gallery_items")
     .select("*")
     .eq("featured", true)
-    .limit(1)
-    .single();
+    .single(); // Use single to get a single record
 
-  if (error && error.code !== "PGRST116") { // PGRST116 means no rows found
-    console.error("Error fetching featured gallery item:", error);
+  if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
+    console.error("Error fetching featured gallery item:", error.message);
     return null;
   }
 
-  return data as GalleryItem | null;
+  return data;
 }
 
-export async function getGalleryItemsCount(): Promise<number> {
-  const supabase = createClient();
-
+export async function getTotalGalleryItemsCount(): Promise<number> {
+  const supabase = createServerClient();
   const { count, error } = await supabase
     .from("gallery_items")
-    .select("*", { count: "exact", head: true });
+    .select("*", { count: "exact" });
 
   if (error) {
-    console.error("Error fetching gallery items count:", error);
+    console.error("Error fetching total gallery items count:", error.message);
     return 0;
   }
 

@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { GalleryItem as GalleryItemType } from "@/types/supabase";
+import type { GalleryItem } from "@/lib/gallery";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 
 interface LightboxProps {
-  images: GalleryItemType[];
+  images: GalleryItem[];
   currentIndex: number;
   onClose: () => void;
   onNext: () => void;
@@ -25,11 +25,13 @@ export function Lightbox({
   const [isClosing, setIsClosing] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const currentImage = images[currentIndex];
+  const currentImage =
+    currentIndex >= 0 && currentIndex < images.length
+      ? images[currentIndex]
+      : null;
 
   const handleClose = useCallback(() => {
     setIsClosing(true);
-    // Allow exit animation to play before unmounting
     setTimeout(onClose, 300);
   }, [onClose]);
 
@@ -47,23 +49,24 @@ export function Lightbox({
   );
 
   useEffect(() => {
+    if (!currentImage) return;
+
     document.addEventListener("keydown", handleKeyDown);
-    // Disable scroll on body when lightbox is open
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [handleKeyDown]);
+  }, [handleKeyDown, currentImage]);
 
   const handlers = useSwipeable({
     onSwipedLeft: onNext,
     onSwipedRight: onPrev,
     preventScrollOnSwipe: true,
-    trackMouse: true, // Enable mouse swiping for desktop testing
+    trackMouse: true,
   });
 
-  if (!currentImage) return null; // Should not happen if images are provided
+  if (!currentImage) return null;
 
   return (
     <AnimatePresence>
@@ -76,7 +79,6 @@ export function Lightbox({
           transition={{ duration: 0.3 }}
           {...handlers}
         >
-          {/* Close Button */}
           <button
             className="absolute top-4 right-4 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent"
             onClick={handleClose}
@@ -85,7 +87,6 @@ export function Lightbox({
             <X size={28} />
           </button>
 
-          {/* Previous Button */}
           <button
             className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent hidden sm:block"
             onClick={onPrev}
@@ -94,7 +95,6 @@ export function Lightbox({
             <ChevronLeft size={28} />
           </button>
 
-          {/* Next Button */}
           <button
             className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl z-50 p-2 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-75 transition-all focus:outline-none focus:ring-2 focus:ring-accent hidden sm:block"
             onClick={onNext}
@@ -103,9 +103,8 @@ export function Lightbox({
             <ChevronRight size={28} />
           </button>
 
-          {/* Image Container */}
           <motion.div
-            key={currentImage.id} // Key for Framer Motion to animate image changes
+            key={currentImage.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -113,24 +112,25 @@ export function Lightbox({
             className="relative max-w-full max-h-full w-full h-full flex items-center justify-center"
           >
             <Image
+              ref={imageRef}
               src={currentImage.image_url}
               alt={currentImage.title}
               fill
               className="object-contain"
               quality={90}
-              priority // Prioritize loading for lightbox images
+              priority
               onLoadingComplete={(img) => {
-                if (imageRef.current) {
-                  // Adjust object-fit for smaller images if needed
-                  if (img.naturalWidth < imageRef.current.offsetWidth && img.naturalHeight < imageRef.current.offsetHeight) {
-                    img.style.objectFit = "scale-down";
-                  }
+                if (
+                  imageRef.current &&
+                  img.naturalWidth < imageRef.current.offsetWidth &&
+                  img.naturalHeight < imageRef.current.offsetHeight
+                ) {
+                  img.style.objectFit = "scale-down";
                 }
               }}
             />
           </motion.div>
 
-          {/* Image Info (Optional) */}
           <div className="absolute bottom-4 p-4 bg-black bg-opacity-50 rounded-lg text-white max-w-md text-center">
             <h3 className="text-lg font-semibold">{currentImage.title}</h3>
             {currentImage.description && (

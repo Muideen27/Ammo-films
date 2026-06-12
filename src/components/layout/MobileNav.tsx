@@ -5,6 +5,7 @@ import { cn, scrollToSection } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Logo } from "./Logo";
+import Link from "next/link";
 
 interface MobileNavProps {
   open: boolean;
@@ -15,7 +16,10 @@ interface MobileNavProps {
 export function MobileNav({ open, onClose, activeId }: MobileNavProps) {
   const handleNav = (id: string) => {
     onClose();
-    setTimeout(() => scrollToSection(id), 300);
+    // For internal section scrolling
+    if (id !== "gallery" && id !== "apply") {
+      setTimeout(() => scrollToSection(id), 300);
+    }
   };
 
   return (
@@ -60,31 +64,39 @@ export function MobileNav({ open, onClose, activeId }: MobileNavProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => handleNav(item.id)}
-                    className={cn(
-                      "w-full rounded-xl px-4 py-3.5 text-left text-lg font-medium transition-colors touch-manipulation min-h-[48px]",
-                      activeId === item.id
-                        ? "bg-accent/20 text-accent"
-                        : "text-slate-200 hover:bg-white/5 hover:text-white"
-                    )}
-                    aria-current={activeId === item.id ? "true" : undefined}
-                  >
-                    {item.label}
-                  </button>
+                  {item.id === "gallery" || item.id === "apply" ? (
+                    <Link
+                      href={item.id === "gallery" ? "/gallery" : "/apply"}
+                      onClick={onClose}
+                      className={cn(
+                        "w-full rounded-xl px-4 py-3.5 text-left text-lg font-medium transition-colors touch-manipulation min-h-[48px]",
+                        activeId === item.id
+                          ? "bg-accent/20 text-accent"
+                          : "text-slate-200 hover:bg-white/5 hover:text-white"
+                      )}
+                      aria-current={activeId === item.id ? "true" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleNav(item.id)}
+                      className={cn(
+                        "w-full rounded-xl px-4 py-3.5 text-left text-lg font-medium transition-colors touch-manipulation min-h-[48px]",
+                        activeId === item.id
+                          ? "bg-accent/20 text-accent"
+                          : "text-slate-200 hover:bg-white/5 hover:text-white"
+                      )}
+                      aria-current={activeId === item.id ? "true" : undefined}
+                    >
+                      {item.label}
+                    </button>
+                  )}
                 </motion.li>
               ))}
             </ul>
-            <div className="border-t border-white/10 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
-              <button
-                type="button"
-                onClick={() => handleNav("apply")}
-                className="w-full rounded-full bg-accent py-3.5 font-semibold text-primary min-h-[48px] touch-manipulation hover:bg-[#e8c547] transition-colors"
-              >
-                Apply Now
-              </button>
-            </div>
+            {/* Removed the separate Apply Now button as it's now part of NAV_ITEMS */}
           </motion.nav>
         </>
       )}

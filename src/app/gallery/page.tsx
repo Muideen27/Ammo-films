@@ -1,12 +1,11 @@
 import { Metadata } from "next";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import Image from "next/image";
 import Link from "next/link";
+import { getGalleryItems, getFeaturedGalleryItem, getTotalGalleryItemsCount } from "@/lib/gallery";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { ChevronRight } from "lucide-react";
-import { getGalleryItems, getFeaturedGalleryItem, getGalleryItemsCount } from "@/lib/gallery";
-import { GalleryItem as GalleryItemType } from "@/types/supabase";
-import { IMAGES } from "@/lib/constants";
+import { AnimateIn } from "@/components/ui/AnimateIn";
+import { PageShell } from "@/components/PageShell";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";
 
 export const metadata: Metadata = {
@@ -17,9 +16,10 @@ export const metadata: Metadata = {
     title: "Ammofilms Gallery | Creator Showcase",
     description:
       "Explore creator success stories, studio sessions, community highlights, and opportunities through the Ammofilms Gallery.",
+    url: "https://www.ammofilms.com/gallery", // Replace with actual domain
     images: [
       {
-        url: "/og-image.jpg", // Replace with a relevant image for your OG tag
+        url: "https://www.ammofilms.com/images/opengraph-gallery.jpg", // Replace with actual opengraph image
         alt: "Ammofilms Gallery",
       },
     ],
@@ -27,101 +27,106 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
+  const initialLimit = 20; // Initial number of items to load
+  const initialGalleryItems = await getGalleryItems(0, initialLimit);
   const featuredItem = await getFeaturedGalleryItem();
-  const initialGalleryItems = await getGalleryItems();
-  const totalGalleryItemsCount = await getGalleryItemsCount();
+  const totalItemsCount = await getTotalGalleryItemsCount(); // Fetch total count
 
   return (
-    <main>
+    <PageShell>
       {/* Hero Section */}
-      <section className="relative h-[calc(100vh-80px)] flex items-center justify-center text-center overflow-hidden">
-        <Image
-          src={featuredItem?.image_url || IMAGES.application} // Use featured image or a fallback
-          alt="Ammofilms Gallery Hero"
-          fill
-          priority
-          className="object-cover brightness-50"
-        />
-        <div className="relative z-10 text-white p-4 max-w-3xl">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl leading-tight">
+      <section className="relative h-screen flex items-center justify-center text-white">
+        <div className="absolute inset-0">
+          <Image
+            src={featuredItem?.image_url || "/images/hero.jpg"}
+            alt={featuredItem?.title || "Ammofilms Gallery Hero"}
+            fill
+            priority
+            quality={100}
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+        <AnimateIn className="relative z-20 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Ammofilms Gallery
           </h1>
-          <p className="mt-4 text-xl sm:text-2xl font-medium">
-            Real Creators. Real Opportunities. Real Growth.
+          <p className="text-xl md:text-3xl font-medium mb-8">
+            Real Creators.
+            <br />
+            Real Opportunities.
+            <br />
+            Real Growth.
           </p>
-          <div className="mt-8">
-            <Button asChild size="lg" className="animate-bounce">
-              <Link href="#gallery-showcase">Explore Showcase</Link>
-            </Button>
-          </div>
-        </div>
+          <Button asChild>
+            <Link href="#gallery-grid">Explore Showcase</Link>
+          </Button>
+        </AnimateIn>
       </section>
 
       {/* Featured Creator Showcase */}
       {featuredItem && (
-        <section id="gallery-showcase" className="py-20 sm:py-28 bg-gradient-to-br from-gray-900 to-black text-white">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="py-16 md:py-24 bg-gray-900 text-white">
+          <div className="container mx-auto px-4">
             <SectionHeading
-              eyebrow="Featured Creator"
-              title={featuredItem.title}
-              description={featuredItem.description || "Discover the journey of our featured creator."
-              }
+              title="Featured Creator"
+              description="Showcasing exceptional talent."
             />
-            <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="relative aspect-video rounded-3xl overflow-hidden shadow-luxury">
+            <AnimateIn className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-64 md:h-96 rounded-lg overflow-hidden">
                 <Image
-                  src={featuredItem.image_url}
-                  alt={featuredItem.title}
+                  src={featuredItem.image_url || "/images/placeholder.jpg"}
+                  alt={featuredItem.title || "Featured Creator"}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <div className="lg:pl-10">
-                <h3 className="font-display text-4xl font-bold leading-tight">
+              <div className="flex flex-col justify-center">
+                <h2 className="text-3xl font-bold mb-4">
                   {featuredItem.title}
-                </h3>
-                <p className="mt-4 text-lg text-gray-300 leading-relaxed">
+                </h2>
+                <p className="text-lg text-gray-300">
                   {featuredItem.description}
                 </p>
-                {/* Add more details or a CTA specific to the featured creator if needed */}
               </div>
-            </div>
+            </AnimateIn>
           </div>
         </section>
       )}
 
       {/* Infinite Masonry Gallery */}
-      <section className="py-20 sm:py-28 bg-slate-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section id="gallery-grid" className="py-16 md:py-24 bg-gray-800">
+        <div className="container mx-auto px-4">
           <SectionHeading
-            eyebrow="Our Community"
-            title="Real Moments, Real Talent"
-            description="Dive into the vibrant world of Ammofilms creators and their inspiring journeys."
+            title="Our Creators"
+            description="A showcase of talent and passion."
           />
-          <GalleryGrid initialItems={initialGalleryItems} totalItemsCount={totalGalleryItemsCount} />
+          <AnimateIn className="mt-12">
+            <GalleryGrid initialItems={initialGalleryItems} totalItemsCount={totalItemsCount} /> {/* Pass totalItemsCount */}
+          </AnimateIn>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 sm:py-28 bg-gray-800 text-white text-center">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            Ready To Start Your Own Journey?
-          </h2>
-          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-            <Button asChild size="lg" variant="accent">
-              <Link href="/apply">Apply Now</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href="https://wa.me/yourphonenumber" target="_blank" rel="noopener noreferrer">
-                WhatsApp
-                <ChevronRight className="h-5 w-5 ml-2" aria-hidden />
-              </Link>
-            </Button>
-          </div>
+      {/* Call To Action */}
+      <section className="py-16 md:py-24 bg-gray-900 text-white text-center">
+        <div className="container mx-auto px-4">
+          <AnimateIn>
+            <h2 className="text-3xl md:text-5xl font-bold mb-8">
+              Ready To Start Your Own Journey?
+            </h2>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button asChild size="lg">
+                <Link href="/apply">Apply Now</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="https://wa.me/YOUR_WHATSAPP_NUMBER">WhatsApp</Link>
+              </Button>
+            </div>
+          </AnimateIn>
         </div>
       </section>
-    </main>
+    </PageShell>
   );
 }
