@@ -1,14 +1,11 @@
 "use client";
 
-import { CONTACT } from "@/lib/constants";
+import { CONTACT, WHATSAPP_URL } from "@/lib/constants";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { scrollToSection } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Mail, MapPin, MessageCircle } from "lucide-react";
-
-const whatsappUrl =
-  "https://wa.me/2349168736391?text=Hello%20Ammofilms,%20I%20would%20like%20to%20learn%20more%20about%20your%20opportunities.";
 
 export function Contact() {
   return (
@@ -45,7 +42,7 @@ export function Contact() {
         className="mt-6 w-full bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500"
       >
         <a
-          href={whatsappUrl}
+          href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
         >

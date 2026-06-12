@@ -5,6 +5,9 @@ export const CONTACT = {
   location: "Nigeria",
 } as const;
 
+export const WHATSAPP_URL =
+  "https://wa.me/2349168736391?text=Hello%20Ammofilms,%20I%20would%20like%20to%20learn%20more%20about%20your%20opportunities.";
+
 export const NAV_ITEMS = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },

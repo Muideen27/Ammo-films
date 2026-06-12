@@ -83,6 +83,14 @@ export function GalleryGrid({ initialItems, totalItemsCount }: GalleryGridProps)
     );
   }, [items.length]);
 
+  if (items.length === 0) {
+    return (
+      <p className="py-12 text-center text-white/60">
+        No gallery images yet. Check back soon.
+      </p>
+    );
+  }
+
   return (
     <>
       <Masonry

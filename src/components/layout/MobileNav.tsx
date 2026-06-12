@@ -1,7 +1,7 @@
 "use client";
 
 import { NAV_ITEMS } from "@/lib/constants";
-import { cn, scrollToSection } from "@/lib/utils";
+import { cn, getNavHref, scrollToSection } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Logo } from "./Logo";
@@ -66,7 +66,7 @@ export function MobileNav({ open, onClose, activeId }: MobileNavProps) {
                 >
                   {item.id === "gallery" || item.id === "apply" ? (
                     <Link
-                      href={item.id === "gallery" ? "/gallery" : "/apply"}
+                      href={getNavHref(item.id)}
                       onClick={onClose}
                       className={cn(
                         "w-full rounded-xl px-4 py-3.5 text-left text-lg font-medium transition-colors touch-manipulation min-h-[48px]",
