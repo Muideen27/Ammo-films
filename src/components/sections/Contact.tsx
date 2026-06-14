@@ -61,7 +61,7 @@ export function Contact() {
               <h3 className="mt-6 font-display text-xl font-bold text-primary">Location</h3>
               <p className="mt-2 text-lg text-foreground/80">{CONTACT.location}</p>
               <p className="mt-3 text-sm text-foreground/60">
-                Serving creators across Nigeria with remote-friendly onboarding.
+                Serving creators across Africa with remote-friendly onboarding.
               </p>
             </article>
           </AnimateIn>

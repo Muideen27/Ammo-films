@@ -1,6 +1,6 @@
 # Ammofilms
 
-Production-ready marketing website for **Ammofilms** — a Nigerian talent recruitment agency connecting creators and models with legitimate international streaming opportunities.
+Production-ready marketing website for **Ammofilms** — a African talent recruitment agency connecting creators and models with legitimate international streaming opportunities.
 
 ## Tech Stack
 
@@ -24,7 +24,7 @@ src/
 docs/
 └── DATABASE.md          # Optional persistence schema
 public/
-└── icon.jpeg
+└── icon.jpg
 ```
 
 ## Getting Started

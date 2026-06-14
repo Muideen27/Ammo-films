@@ -19,7 +19,7 @@ export function Footer() {
               Ammofilms
             </Link>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
-              Connecting Nigerian talent to legitimate global streaming opportunities
+              Connecting African talent to legitimate global streaming opportunities
               with professional onboarding, training, and ongoing support.
             </p>
           </div>

@@ -14,14 +14,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { CheckCircle2, ChevronLeft, ChevronRight, Save, XCircle } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useEffect, useState, useMemo } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { getAfricanCountries, getRegionsByCountryCode } from "@/lib/countryData";
+import { SelectInput } from "@/components/ui/SelectInput";
 
 const defaultValues: Omit<ApplicationFormData, "status"> = {
   fullName: "",
   age: 18,
-  city: "",
+  country: "",
   state: "",
+  city: "",
   phone: "",
   email: "",
   experience: "",
@@ -40,12 +43,40 @@ export function ApplicationForm() {
     trigger,
     watch,
     setValue,
+    control,
+    resetField,
     formState: { errors, isSubmitting },
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
     defaultValues,
     mode: "onBlur",
   });
+
+  const watchedCountry = watch("country");
+
+  const africanCountries = useMemo(() => getAfricanCountries(), []);
+
+  const countryOptions = useMemo(() => {
+    return africanCountries.map(country => ({
+      label: country.countryName,
+      value: country.countryShortCode,
+    }));
+  }, [africanCountries]);
+
+  const stateOptions = useMemo(() => {
+    if (!watchedCountry) return [];
+    const regions = getRegionsByCountryCode(watchedCountry);
+    return regions.map(region => ({
+      label: region.name,
+      value: region.shortCode,
+    }));
+  }, [watchedCountry]);
+
+  useEffect(() => {
+    // Reset state and city when country changes
+    resetField("state");
+    resetField("city");
+  }, [watchedCountry, resetField]);
 
   const loadDraft = useCallback(() => {
     try {
@@ -269,24 +300,51 @@ export function ApplicationForm() {
 
                     {step === 2 && (
                       <>
-                        <Input
-                          label="City"
-                          placeholder="e.g. Lagos"
-                          autoComplete="address-level2"
-                          {...register("city")}
-                          error={errors.city?.message}
-                        />
-                        <Input
-                          label="State"
-                          placeholder="e.g. Lagos State"
-                          autoComplete="address-level1"
-                          {...register("state")}
-                          error={errors.state?.message}
+                        <Controller
+                          name="country"
+                          control={control}
+                          render={({ field }) => (
+                            <SelectInput<ApplicationFormData>
+                              {...field}
+                              control={control}
+                              label="Country"
+                              options={countryOptions}
+                              placeholder="Select your country"
+                              error={errors.country?.message}
+                            />
+                          )}
                         />
                       </>
                     )}
 
                     {step === 3 && (
+                      <>
+                        <Controller
+                          name="state"
+                          control={control}
+                          render={({ field }) => (
+                            <SelectInput<ApplicationFormData>
+                              {...field}
+                              control={control}
+                              label="State/Province/Region"
+                              options={stateOptions}
+                              placeholder="Select your state/province/region"
+                              error={errors.state?.message}
+                              disabled={!watchedCountry || stateOptions.length === 0}
+                            />
+                          )}
+                        />
+                        <Input
+                          label="City (Optional)"
+                          placeholder="e.g. Lagos Island"
+                          autoComplete="address-level2"
+                          {...register("city")}
+                          error={errors.city?.message}
+                        />
+                      </>
+                    )}
+
+                    {step === 4 && (
                       <>
                         <Input
                           label="Phone"
@@ -307,7 +365,7 @@ export function ApplicationForm() {
                       </>
                     )}
 
-                    {step === 4 && (
+                    {step === 5 && (
                       <>
                         <Textarea
                           label="Experience"
