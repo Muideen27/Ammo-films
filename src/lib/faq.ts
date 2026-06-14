@@ -9,13 +9,13 @@ export const FAQ_ITEMS: FAQItem[] = [
     id: "what-is-ammofilms",
     question: "What is Ammofilms?",
     answer:
-      "Ammofilms is a Nigerian talent recruitment agency dedicated to connecting aspiring creators and models with legitimate international streaming opportunities. We provide professional onboarding, training, and ongoing support so you can build a sustainable global career with confidence.",
+      "Ammofilms is an African talent recruitment agency dedicated to connecting aspiring creators and models with legitimate international streaming opportunities. We provide professional onboarding, training, and ongoing support so you can build a sustainable global career with confidence.",
   },
   {
     id: "who-can-apply",
     question: "Who can apply to join Ammofilms?",
     answer:
-      "We welcome motivated Nigerian creators and models aged 18 and above who meet our documentation, internet, and conduct requirements. You do not need prior streaming experience—we assess potential, professionalism, and readiness during the application process.",
+      "We welcome motivated African creators and models aged 18 and above who meet our documentation, internet, and conduct requirements. You do not need prior streaming experience—we assess potential, professionalism, and readiness during the application process.",
   },
   {
     id: "is-legitimate",
@@ -97,9 +97,9 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     id: "work-location",
-    question: "Can I work from home in Nigeria?",
+    question: "Can I work from home?",
     answer:
-      "Yes. Many creators in our network work from private, professional home studios across Nigeria. Your workspace must meet our safety, lighting, and conduct standards for international platforms.",
+      "Yes. Many creators in our network work from private, professional home studios across Africa. Your workspace must meet our safety, lighting, and conduct standards for international platforms.",
   },
   {
     id: "conduct",

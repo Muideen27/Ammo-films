@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Ammofilms — Nigerian talent to global streaming opportunities";
+export const alt = "Ammofilms — African talent to global streaming opportunities";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -48,7 +48,7 @@ export default function OgImage() {
           <span style={{ fontSize: 48, fontWeight: 700 }}>Ammofilms</span>
         </div>
         <p style={{ fontSize: 36, fontWeight: 600, lineHeight: 1.3, maxWidth: 900 }}>
-          Connecting Nigerian Talent To Global Streaming Opportunities
+          Connecting African Talent To Global Streaming Opportunities
         </p>
         <p style={{ fontSize: 22, color: "#94A3B8", marginTop: 24, maxWidth: 800 }}>
           Professional onboarding · Training · Trusted international platforms

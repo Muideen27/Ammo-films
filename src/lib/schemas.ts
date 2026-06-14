@@ -10,8 +10,9 @@ export const applicationSchema = z.object({
     .int("Age must be a whole number")
     .min(18, "You must be 18 or older to apply")
     .max(65, "Please enter a valid age"),
-  city: z.string().min(2, "City is required").max(80),
-  state: z.string().min(2, "State is required").max(80),
+  country: z.string().trim().min(1, "Country is required").max(80),
+  state: z.string().trim().min(1, "State/Province/Region is required").max(80),
+  city: z.string().trim().max(80).optional().or(z.literal('')),
   phone: z
     .string()
     .min(10, "Enter a valid phone number")
@@ -35,7 +36,8 @@ export const APPLICATION_STORAGE_KEY = "ammofilms-application-draft";
 
 export const FORM_STEPS = [
   { id: 1, title: "Personal", fields: ["fullName", "age"] as const },
-  { id: 2, title: "Location", fields: ["city", "state"] as const },
-  { id: 3, title: "Contact", fields: ["phone", "email"] as const },
-  { id: 4, title: "Your Story", fields: ["experience", "motivation"] as const },
+  { id: 2, title: "Country", fields: ["country"] as const },
+  { id: 3, title: "State/City", fields: ["state", "city"] as const },
+  { id: 4, title: "Contact", fields: ["phone", "email"] as const },
+  { id: 5, title: "Your Story", fields: ["experience", "motivation"] as const },
 ] as const;

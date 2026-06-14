@@ -6,9 +6,9 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     name: "Ammofilms",
     url: SITE_URL,
-    logo: `${SITE_URL}/icon.jpeg`,
+    logo: `${SITE_URL}/icon.jpg`,
     description:
-      "Nigerian talent recruitment agency connecting aspiring creators and models with legitimate international streaming opportunities.",
+      "African talent recruitment agency connecting aspiring creators and models with legitimate international streaming opportunities.",
     email: CONTACT.email,
     address: {
       "@type": "PostalAddress",
@@ -16,7 +16,7 @@ export function getOrganizationSchema() {
     },
     areaServed: {
       "@type": "Country",
-      name: "Nigeria",
+      name: "African",
     },
     sameAs: [],
   };
@@ -29,7 +29,7 @@ export function getWebSiteSchema() {
     name: "Ammofilms",
     url: SITE_URL,
     description:
-      "Professional creator recruitment for global streaming opportunities in Nigeria.",
+      "Professional creator recruitment for global streaming opportunities in Africa.",
     potentialAction: {
       "@type": "SearchAction",
       target: `${SITE_URL}/#faq`,
@@ -77,7 +77,7 @@ export function getJobPostingSchema() {
     employmentType: "CONTRACTOR",
     applicantLocationRequirements: {
       "@type": "Country",
-      name: "Nigeria",
+      name: "African",
     },
   };
 }

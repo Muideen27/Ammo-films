@@ -34,11 +34,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Ammofilms | Nigerian Creator Recruitment for Global Streaming",
+    default: "Ammofilms | African Creator Recruitment for Global Streaming",
     template: "%s | Ammofilms",
   },
   description:
-    "Ammofilms connects Nigerian creators and models with legitimate international streaming opportunities. Professional onboarding, training, and trusted platform access.",
+    "Ammofilms connects African creators and models with legitimate international streaming opportunities. Professional onboarding, training, and trusted platform access.",
   keywords: [...KEYWORDS],
   authors: [{ name: "Ammofilms" }],
   creator: "Ammofilms",
@@ -47,15 +47,15 @@ export const metadata: Metadata = {
     locale: "en_NG",
     url: SITE_URL,
     siteName: "Ammofilms",
-    title: "Ammofilms | Global Streaming Opportunities for Nigerian Talent",
+    title: "Ammofilms | Global Streaming Opportunities for African Talent",
     description:
-      "Premium talent recruitment agency connecting Nigerian creators to legitimate international streaming careers.",
+      "Premium talent recruitment agency connecting African creators to legitimate international streaming careers.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Ammofilms — Nigerian talent to global streaming opportunities",
+        alt: "Ammofilms — African talent to global streaming opportunities",
       },
     ],
   },
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ammofilms | Global Streaming Opportunities",
     description:
-      "Connect with legitimate international streaming platforms. Professional support from Nigeria.",
+      "Connect with legitimate international streaming platforms. Professional support across Africa",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   icons: {
-    icon: "/icon.jpeg",
+    icon: "/icon.jpg",
   },
   category: "Business",
 };

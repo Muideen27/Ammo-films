@@ -44,8 +44,8 @@ export function About() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="About Us"
-          title="Building Global Careers From Nigeria"
-          description="Ammofilms bridges ambitious Nigerian creators with legitimate international streaming opportunities backed by professional agency support."
+          title="Building Global Careers From Africa"
+          description="Ammofilms bridges ambitious African creators with legitimate international streaming opportunities backed by professional agency support."
         />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
@@ -72,7 +72,7 @@ export function About() {
                   <div>
                     <h3 className="font-display text-xl font-bold text-primary">Our Mission</h3>
                     <p className="mt-2 text-foreground/75 leading-relaxed">
-                      To connect Nigerian talent with trusted global streaming platforms through
+                      To connect African talent with trusted global streaming platforms through
                       ethical recruitment, rigorous onboarding, and career-building support that
                       puts safety and professionalism first.
                     </p>
@@ -91,7 +91,7 @@ export function About() {
                     <h3 className="font-display text-xl font-bold text-primary">Our Vision</h3>
                     <p className="mt-2 text-foreground/75 leading-relaxed">
                       To become Africa&apos;s most trusted creator recruitment agency—recognized
-                      internationally for elevating Nigerian talent to world-class streaming
+                      internationally for elevating African talent to world-class streaming
                       careers with dignity and sustainable success.
                     </p>
                   </div>

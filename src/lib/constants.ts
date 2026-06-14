@@ -2,7 +2,7 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ammofilms.c
 
 export const CONTACT = {
   email: "ammofilmss@gmail.com",
-  location: "Nigeria",
+  location: "Across Africa",
 } as const;
 
 export const WHATSAPP_URL =
@@ -43,12 +43,12 @@ export const IMAGES = {
 
 
 export const KEYWORDS = [
-  "Nigerian Models",
+  "African Models",
   "Streaming Opportunities",
   "Creator Recruitment",
-  "Webcam Agency Nigeria",
+  "Webcam Agency African",
   "Live Streaming Careers",
   "Ammofilms",
   "International Streaming",
-  "Creator Economy Nigeria",
+  "Creator Economy African",
 ] as const;
