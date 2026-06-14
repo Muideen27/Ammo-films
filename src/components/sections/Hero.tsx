@@ -40,7 +40,7 @@ export function Hero() {
             id="hero-heading"
             className="font-display text-[clamp(2rem,6vw,3.75rem)] font-bold leading-[1.1] tracking-tight text-white"
           >
-            Connecting Nigerian Talent To Global Streaming Opportunities
+            Connecting African Talent To Global Streaming Opportunities
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
@@ -64,7 +64,7 @@ export function Hero() {
           </div>
 
           <ul className="mt-10 flex flex-wrap gap-6 text-sm text-slate-400" aria-label="Trust highlights">
-            {["18+ Verified", "Global Platforms", "Nigeria Based"].map((item) => (
+            {["18+ Verified", "Global Platforms", "Africa Based"].map((item) => (
               <li key={item} className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-success" aria-hidden />
                 {item}
